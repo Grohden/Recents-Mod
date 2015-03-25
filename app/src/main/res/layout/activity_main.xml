@@ -1,0 +1,81 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.rohden.recentsapp.MainActivity"
+    android:layout_width="fill_parent"
+    android:layout_marginTop="30dp"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    >
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        <EditText
+            android:id="@+id/clock_text"
+            android:layout_weight="1.5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/text_in_clock" />
+        <Button
+            android:id="@+id/sysui"
+            android:textSize="16sp"
+            android:layout_centerInParent="true"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/restart_systemUI" />
+    </LinearLayout>
+    <TextView
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:hint="@string/thumbnail_size"/>
+	<LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal" >
+	    <EditText
+	        android:id="@+id/recent_width"
+	        android:layout_weight="1"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:hint="@string/width"
+			android:inputType="numberDecimal"/>
+	   <EditText
+	        android:id="@+id/recent_heigth"
+	        android:layout_weight="1"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:hint="@string/height"
+	        android:inputType="numberDecimal"/>
+	</LinearLayout>
+	
+	<RelativeLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal" >
+        <Button
+            android:id="@+id/apply"
+            android:layout_centerInParent="true"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="@string/apply" />
+	  
+    </RelativeLayout>
+
+	<View
+	    android:id="@+id/square"
+	    android:layout_marginTop="80dp"
+	   	android:layout_gravity="center"
+	    android:layout_width="@dimen/thumbnail_width"
+	    android:layout_height="@dimen/thumbnail_height"
+	    android:background="#55000000" />
+    <TextView
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/preview"/>
+</LinearLayout>

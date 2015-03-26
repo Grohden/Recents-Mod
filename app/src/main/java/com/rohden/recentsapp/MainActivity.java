@@ -25,49 +25,42 @@ public class MainActivity extends Activity {
 	private int recentWidth,recentHeight;
 	private View vSquare;
 	private Button apply,restartSysUI;
-	//private static final String TAG="Recent";
+    private Boolean firstRun;
+    private SharedPreferences pref;
+
+
+    //private static final String TAG="Recent";
 
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+
 		eClockText =(EditText) findViewById(R.id.clock_text);
 		eRecentWidth=(EditText) findViewById(R.id.recent_width);
 		eRecentHeight=(EditText) findViewById(R.id.recent_heigth);
 		vSquare=(View) findViewById(R.id.square);
-	
+        pref = getSharedPreferences("user_settings", MODE_WORLD_READABLE);
+
+        //first run check
+        firstRun=getSharedPreferences("user_settings",MODE_PRIVATE).getBoolean("firstRun", true);
+        if(!firstRun){
+            eClockText.setText(pref.getString("clock_text", ""));
+            eRecentHeight.setText(pref.getInt("recent_height",0)+"");
+            eRecentWidth.setText(pref.getInt("recent_width",0)+"");
+            Toast.makeText(this,"is not first run",Toast.LENGTH_SHORT).show();
+           }
+	    else{
+            getSharedPreferences("user_settings",MODE_PRIVATE).edit().putBoolean("firstRun", false).commit();
+            applySettings();
+        }
+
 		apply=(Button)findViewById(R.id.apply);
 		apply.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                clockText=eClockText.getText().toString();
-
-                //If text fields null
-                if(eRecentWidth.getText().toString().equals("")) recentWidth = 164;
-                else recentWidth = Integer.parseInt(eRecentWidth.getText().toString());
-
-                if(eRecentHeight.getText().toString().equals("")) recentHeight = 145;
-                else recentHeight=Integer.parseInt(eRecentHeight.getText().toString());
-
-                //draw the square
-                vSquare.getLayoutParams().height=recentHeight;
-                vSquare.getLayoutParams().width=recentWidth;
-                vSquare.setLayoutParams(vSquare.getLayoutParams());
-
-               //for xposed seems like we NEED to use MODE_WORLD_READABLE.
-                @SuppressWarnings("deprecation")
-                SharedPreferences pref;
-                pref = getSharedPreferences("user_settings", MODE_WORLD_READABLE);
-
-                Editor editor = pref.edit();
-                editor.putString("clock_text", clockText);
-                editor.putInt("recent_width", recentWidth);
-                editor.putInt("recent_height", recentHeight);
-                editor.apply();
-
-            }
-        });
+            public void onClick(View v) {applySettings();}});
 
         restartSysUI=(Button)findViewById(R.id.sysui);
         restartSysUI.setOnClickListener(new View.OnClickListener() {
@@ -78,8 +71,33 @@ public class MainActivity extends Activity {
         }
         );
 	}
+    private void applySettings(){
+        clockText=eClockText.getText().toString();
 
-	
+        //If text fields null
+        if(eRecentWidth.getText().toString().equals("")) recentWidth = 164;
+        else recentWidth = Integer.parseInt(eRecentWidth.getText().toString());
+
+        if(eRecentHeight.getText().toString().equals("")) recentHeight = 145;
+        else recentHeight=Integer.parseInt(eRecentHeight.getText().toString());
+
+        if(eClockText.getText().toString().equals("")) clockText = "";
+        else clockText=eClockText.getText().toString();
+
+        //draw the square
+        vSquare.getLayoutParams().height=recentHeight;
+        vSquare.getLayoutParams().width=recentWidth;
+        vSquare.setLayoutParams(vSquare.getLayoutParams());
+
+        //for xposed seems like we NEED to use MODE_WORLD_READABLE.
+        Editor editor = pref.edit();
+        editor.putString("clock_text", clockText);
+        editor.putInt("recent_width", recentWidth);
+        editor.putInt("recent_height", recentHeight);
+        editor.apply();
+    }
+
+	//superuser method
 	private void killPackage(String packageToKill) {
         Process su = null;
         // get superuser 

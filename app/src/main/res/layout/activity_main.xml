@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.rohden.recentsapp.MainActivity"
     android:layout_width="fill_parent"
-    android:layout_marginTop="30dp"
+    android:layout_marginTop="15dp"
     android:layout_height="fill_parent"
     android:orientation="vertical"
     >

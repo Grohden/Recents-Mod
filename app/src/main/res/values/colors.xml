@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#55000000</color>
+    <color name="pink_tree">#F06292</color>
     <color name="pink_seven">#C2185B</color>
+    <color name="pink_nine">#880E4F</color>
+    <color name="pink">#E91E63</color>
+
 </resources>

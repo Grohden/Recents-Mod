@@ -1,31 +1,29 @@
 package com.rohden.recentsapp;
 
-import java.io.DataOutputStream;
-import java.io.IOException;
-
-import android.annotation.SuppressLint;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
+import android.view.animation.AnticipateInterpolator;
+import android.view.animation.Transformation;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.recentsapp.R;
 import com.gc.materialdesign.views.ButtonRectangle;
+import com.gc.materialdesign.views.Slider;
+
+import java.io.DataOutputStream;
+import java.io.IOException;
 
 public class MainActivity extends Activity {
     //android vars
-	private EditText eClockText,eRecentWidth,eRecentHeight;
+	private EditText eClockText;
 	private String clockText;
 	private int recentWidth,recentHeight;
 	private View vSquare;
@@ -34,6 +32,7 @@ public class MainActivity extends Activity {
 
     //Material lib vars
     private ButtonRectangle apply,restartSysUI;
+    private Slider sRecentWidth,sRecentHeight;
 
 
     //private static final String TAG="Recent";
@@ -46,8 +45,8 @@ public class MainActivity extends Activity {
 
 
 		eClockText =(EditText) findViewById(R.id.clock_text);
-		eRecentWidth=(EditText) findViewById(R.id.recent_width);
-		eRecentHeight=(EditText) findViewById(R.id.recent_heigth);
+		sRecentWidth=(Slider) findViewById(R.id.recent_width);
+		sRecentHeight=(Slider) findViewById(R.id.recent_height);
 
 
         //for xposed seems like we NEED to use MODE_WORLD_READABLE.
@@ -55,12 +54,13 @@ public class MainActivity extends Activity {
 
         if(!getSharedPreferences("user_settings",MODE_PRIVATE).getBoolean("firstRun", true)){
             eClockText.setText(xposedPreferences.getString("clock_text", ""));
-            eRecentHeight.setText(xposedPreferences.getInt("recent_height",0)+"");
-            eRecentWidth.setText(xposedPreferences.getInt("recent_width",0)+"");
+            sRecentHeight.setValue(xposedPreferences.getInt("recent_height", 0));
+            sRecentWidth.setValue(xposedPreferences.getInt("recent_width", 0));
            }
 	    else{ firstRunSettings(); }
 
         setSquareSize(xposedPreferences.getInt("recent_width",0),xposedPreferences.getInt("recent_height",0));
+
         //buttons listeners
 		apply=(ButtonRectangle)findViewById(R.id.apply);
 		apply.setOnClickListener(new View.OnClickListener() {
@@ -73,22 +73,25 @@ public class MainActivity extends Activity {
             public void onClick(View v) {killPackage("com.android.systemui");applySettings();}
             });
 
+        sRecentHeight.setOnValueChangedListener(new Slider.OnValueChangedListener() {
+            @Override
+            public void onValueChanged(int i) {
+                recentHeight=i;
+            }
+        });
+        sRecentWidth.setOnValueChangedListener(new Slider.OnValueChangedListener() {
+            @Override
+            public void onValueChanged(int i) {
+                recentWidth=i;
+            }
+        });
 	}
+
     private void applySettings(){
-
-        //If text fields null
-        if(eRecentWidth.getText().toString().equals("")) recentWidth = xposedPreferences.getInt("recent_width", 0);
-        else recentWidth = Integer.parseInt(eRecentWidth.getText().toString());
-
-        if(eRecentHeight.getText().toString().equals("")) recentHeight = xposedPreferences.getInt("recent_height", 0);
-        else recentHeight=Integer.parseInt(eRecentHeight.getText().toString());
-
         setSquareSize(recentWidth,recentHeight);
-
+        //If text null
         if(eClockText.getText().toString().equals("")) clockText = xposedPreferences.getString("clock_text", "");
         else clockText=eClockText.getText().toString();
-
-
 
         //Put values in SharedPreferences
         Editor editor = xposedPreferences.edit();
@@ -97,6 +100,7 @@ public class MainActivity extends Activity {
         editor.putInt("recent_height", recentHeight);
         editor.apply();
     }
+
     private void firstRunSettings(){
         getSharedPreferences("user_settings",MODE_PRIVATE).edit().putBoolean("firstRun", false).commit();
         Editor editor = xposedPreferences.edit();
@@ -107,14 +111,29 @@ public class MainActivity extends Activity {
         applySettings();
         }
 
-    private void setSquareSize(int width, int height){
-        vSquare=(View) findViewById(R.id.square);
-        vSquare.getLayoutParams().height=height;
-        vSquare.getLayoutParams().width=width;
-        vSquare.setLayoutParams(vSquare.getLayoutParams());
+    private void setSquareSize(final int width, final int height) {
+        vSquare = (View) findViewById(R.id.square);
+        ValueAnimator vlaw = ValueAnimator.ofInt(xposedPreferences.getInt("recent_height", 0), height);
+        vlaw.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            public void onAnimationUpdate(ValueAnimator animation) {
+                Integer value = (Integer) animation.getAnimatedValue();
+                vSquare.getLayoutParams().height = value.intValue();
+                vSquare.requestLayout();
+            }
+        });
+        ValueAnimator vlah = ValueAnimator.ofInt(xposedPreferences.getInt("recent_width", 0), width);
+        vlah.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            public void onAnimationUpdate(ValueAnimator animation) {
+                Integer value = (Integer) animation.getAnimatedValue();
+                vSquare.getLayoutParams().width = value.intValue();
+                vSquare.requestLayout();
+            }
+        });
 
+        AnimatorSet animatorSet=new AnimatorSet();
+        animatorSet.play(vlah).with(vlaw);
+        animatorSet.start();
     }
-
 	//superuser method
 	private void killPackage(String packageToKill) {
         Process su = null;

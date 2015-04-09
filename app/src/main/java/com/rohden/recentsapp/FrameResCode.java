@@ -16,8 +16,8 @@ public class FrameResCode implements IXposedHookZygoteInit{
         //-----------Shared preferences------------//
 		XSharedPreferences pref = new XSharedPreferences("com.example.recentsapp", "user_settings");
         
-        int width=pref.getInt("recent_width",0);
-        int height=pref.getInt("recent_height",0);
+        float width=pref.getFloat("recent_width",0);
+        float height=pref.getFloat("recent_height",0);
         //-----------------------------------------//
         
         //these values are from systemUI recent apps thumbnails, and seems to be on framework-res.apk , why?i don't know.   

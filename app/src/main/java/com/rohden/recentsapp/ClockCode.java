@@ -22,7 +22,7 @@ private static String PACKAGE="com.android.systemui";
             	//The clock is a TextView so we can make a cast to TextView
             	TextView tv = (TextView) param.thisObject;
             	//reads the value which is saves, using nothing as default value to use if nothing is saved
-            	XSharedPreferences pref = new XSharedPreferences("com.example.recentsapp", "user_settings"); //THIS FUCK IS FROM GEN FOLDER! I'VE SPEND ONE DAY JUST TO KNOW THIS!
+            	XSharedPreferences pref = new XSharedPreferences("com.example.recentsapp", "user_settings"); //THIS FUCK IS FROM GEN FOLDER! I'VE SPEND ONE DAY JUST TO KNOW THIS!(CUZ I HAVE CHANGED MY PACKAGE NAME)
             	//Gets the shared preference
             	String text = pref.getString("clock_text", "");
             	//reads the value which is saves, using nothing as default value to use if nothing is saved

@@ -1,4 +1,2 @@
-com.rohden.recentsapp.ClockCode
-com.rohden.recentsapp.SysUICode
-com.rohden.recentsapp.FrameResCode
-
+grohden.recentsmod.xposedclasses.FrameworkResModule
+grohden.recentsmod.xposedclasses.SystemUIModule

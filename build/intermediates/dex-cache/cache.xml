@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\Gabriel\AndroidstudioProjects\Recents-Mod\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.0.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="d84409890828e07d344a3b9b1da545dba9897b51">
+        <dex dex="C:\Users\Gabriel\AndroidstudioProjects\Recents-Mod\app\build\intermediates\pre-dexed\debug\classes-2ca38782137354f280bf0800a697507edd6d1e5f.jar" />
+    </item>
+    <item
+        jar="C:\Users\Gabriel\.gradle\caches\modules-2\files-2.1\com.jakewharton\butterknife\6.1.0\63735f48b82bcd24cdd33821342428252eb1ca5a\butterknife-6.1.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="63735f48b82bcd24cdd33821342428252eb1ca5a">
+        <dex dex="C:\Users\Gabriel\AndroidstudioProjects\Recents-Mod\app\build\intermediates\pre-dexed\debug\butterknife-6.1.0-e3c396f020c5b1a441b34d73f3a7d3719830ab13.jar" />
+    </item>
+    <item
+        jar="C:\Users\Gabriel\AndroidstudioProjects\Recents-Mod\app\libs\XposedBridgeApi-54.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="5f16da4d2ecb2c95be2556550e4a63461f43a99b">
+        <dex dex="C:\Users\Gabriel\AndroidstudioProjects\Recents-Mod\app\build\intermediates\pre-dexed\debug\XposedBridgeApi-54-12b586e5dddf8f2ad563ff51be88b714d9e43c4c.jar" />
+    </item>
+    <item
+        jar="C:\Users\Gabriel\AndroidstudioProjects\Recents-Mod\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
+        <dex dex="C:\Users\Gabriel\AndroidstudioProjects\Recents-Mod\app\build\intermediates\pre-dexed\debug\classes-058ee1aa3037bf3200a74f5a1c9d4b78e498e64e.jar" />
+    </item>
+    <item
+        jar="C:\Users\Gabriel\AndroidstudioProjects\Recents-Mod\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\jars\libs\internal_impl-22.0.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
+        <dex dex="C:\Users\Gabriel\AndroidstudioProjects\Recents-Mod\app\build\intermediates\pre-dexed\debug\internal_impl-22.0.0-e18e557827bf60f6f384f92952cbe606daaeb930.jar" />
+    </item>
+    <item
+        jar="C:\Users\Gabriel\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.0.0\support-annotations-22.0.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="685d0b2c590447e85284ed84712cb363ba04eff8">
+        <dex dex="C:\Users\Gabriel\AndroidstudioProjects\Recents-Mod\app\build\intermediates\pre-dexed\debug\support-annotations-22.0.0-ab90d2b7fda4e3caf3b16094b7a97fb86f31de17.jar" />
+    </item>
+
+</items>

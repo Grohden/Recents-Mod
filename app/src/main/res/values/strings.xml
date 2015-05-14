@@ -1,15 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="app_name">Recents App</string>
+    <string name="app_name">Recents Mod</string>
+    <string name="nothing_implemented">It seems like the developer was too lazy to add some user preferences</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="text_in_clock">Text in Clock</string>
-    <string name="thumbnail_size">Recent thumbnail values</string>
-    <string name="width">Width</string>
-    <string name="height">Height</string>
-    <string name="apply">Apply</string>
-    <string name="restart_systemUI">Restart SystemUI</string>
-    <string name="preview">Preview</string>
-
 </resources>

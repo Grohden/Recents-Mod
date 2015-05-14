@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#000000</color>
-    <color name="gray_two">#F5F5F5</color>
-    <color name="pink_tree">#F06292</color>
-    <color name="pink_seven">#C2185B</color>
-    <color name="pink_nine">#880E4F</color>
-    <color name="pink">#E91E63</color>
-    <color name="white">#ffffff</color>
-
+    <color name="font_color">#E3F2FD</color>
+    <color name="activity_background">#2196F3</color>
+    <color name="actionbar_background">#0D47A1</color>
+    
+    
 </resources>

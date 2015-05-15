@@ -56,47 +56,32 @@ public class SystemUIModule implements IXposedHookZygoteInit, IXposedHookInitPac
         resparam.res.hookLayout("com.android.systemui", "layout", "status_bar_recent_panel", new XC_LayoutInflated() {
             @Override
             public void handleLayoutInflated(XC_LayoutInflated.LayoutInflatedParam liparam) throws Throwable {
-                if(liparam.variant.equals("layout")) {
+                if (liparam.variant.equals("layout")) {
                     //this holds the scrollview , and the scrollview hold linearLayout.
-                    FrameLayout frameLayout = (FrameLayout) liparam.view.findViewById(
-                            liparam.res.getIdentifier("recents_bg_protect", "id", SYSTEM_UI_PACKAGE));
-                    frameLayout.setBackgroundColor(Color.parseColor("#9FA8DA"));
-
-                    Context sysContext = frameLayout.getContext(); //here i'm 'stoling' the context from one view of systemUI.
+                    FrameLayout frameLayout = (FrameLayout) liparam.view.findViewById(liparam.res.getIdentifier("recents_bg_protect", "id", SYSTEM_UI_PACKAGE));
+                    //frameLayout.setBackgroundColor(Color.parseColor("#9FA8DA"));
 
                     //ScrollView because the original view extends it.
-                    ScrollView layoutportrait = (ScrollView) liparam.view.findViewById(
-                            liparam.res.getIdentifier("recents_container", "id", SYSTEM_UI_PACKAGE));
-                    layoutportrait.setBackgroundColor(Color.parseColor("#00BCD4"));
+                    ScrollView layoutportrait = (ScrollView) liparam.view.findViewById(liparam.res.getIdentifier("recents_container", "id", SYSTEM_UI_PACKAGE));
+                    //layoutportrait.setBackgroundColor(Color.parseColor("#00BCD4"));
+                    //layoutportrait.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+                    layoutportrait.setRotation(90.0f);
 
                     LinearLayout linearLayout = (LinearLayout) liparam.view.findViewById(liparam.res.getIdentifier("recents_linear_layout", "id", SYSTEM_UI_PACKAGE));
-                    linearLayout.setBackgroundColor(Color.parseColor("#0D47A1"));
+                    //linearLayout.setBackgroundColor(Color.parseColor("#0D47A1"));
 
-                    Context modContext = sysContext.createPackageContext("grohden.recentsmod", Context.CONTEXT_IGNORE_SECURITY);
+                }
+            }
 
-                    HorizontalScrollView hsv=new HorizontalScrollView(sysContext,null);
-                    FrameLayout.LayoutParams flp = new FrameLayout.LayoutParams(
-                            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-                    flp.gravity = Gravity.CENTER_HORIZONTAL;
-                    hsv.setLayoutParams(flp);
-
-                    linearLayout.setBackgroundColor(Color.parseColor("#76FF03"));
-
-
-                    ViewGroupUtils.removeFromParent(linearLayout);
-                    ViewGroupUtils.removeView(layoutportrait);
-
-                    linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-                    hsv.addView(linearLayout);
-                    frameLayout.addView(hsv);
-
-
-
-
-                    Toast.makeText(sysContext,liparam.variant,Toast.LENGTH_SHORT).show();
-                    }
-
-                 }
+        });
+        resparam.res.hookLayout("com.android.systemui", "layout", "status_bar_recent_item", new XC_LayoutInflated() {
+            @Override
+            public void handleLayoutInflated(XC_LayoutInflated.LayoutInflatedParam liparam) throws Throwable {
+                if (liparam.variant.equals("layout")) {
+                    FrameLayout frameLayout = (FrameLayout) liparam.view.findViewById(liparam.res.getIdentifier("recent_item", "id", SYSTEM_UI_PACKAGE)).getParent();
+                    frameLayout.setRotation(-90.0f);
+                }
+            }
 
         });
     }

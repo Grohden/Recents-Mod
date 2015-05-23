@@ -2,7 +2,7 @@
     <!-- System dimens -->
     <!-- Size of application thumbnail -->
     <dimen name="thumbnail_width">160dp</dimen>
-    <dimen name="thumbnail_height">240dp</dimen>
+    <dimen name="thumbnail_height">260dp</dimen>
 
 
 

@@ -1,0 +1,36 @@
+<RelativeLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context="grohden.recentsmod.RecentsFragment"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:layout_centerInParent="true"
+            android:id="@+id/app_thumbnail"
+            android:layout_width="@dimen/thumbnail_width"
+            android:layout_height="@dimen/thumbnail_height" >
+            <View
+                android:layout_centerInParent="true"
+                android:background="#ffffff"
+                android:layout_margin="5dp"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
+        </FrameLayout>
+        <View
+            android:background="#ffffff"
+            android:layout_marginTop="2dp"
+            android:id="@+id/app_icon"
+            android:layout_below="@+id/app_thumbnail"
+            android:layout_alignLeft="@+id/app_thumbnail"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+        <TextView
+            android:layout_toRightOf="@+id/app_icon"
+            android:layout_alignTop="@+id/app_icon"
+            android:layout_alignBottom="@+id/app_icon"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:text="@string/app_name"/>
+   </RelativeLayout>

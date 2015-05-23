@@ -3,6 +3,50 @@
     <color name="font_color">#E3F2FD</color>
     <color name="activity_background">#2196F3</color>
     <color name="actionbar_background">#0D47A1</color>
-    
+    <color name="recents_border">#E0F7FA</color>
+
+    <color name="lime_green">#a4c400</color>
+    <color name="green">#60a917</color>
+    <color name="dark_green">#008a00</color>
+    <color name="light_blue">#00aba9</color>
+    <color name="blue">#1ba1e2</color>
+    <color name="dark_blue">#0050ef</color>
+    <color name="purple">#6a00ff</color>
+    <color name="light_purple">#aa00ff</color>
+    <color name="pink">#f472d0</color>
+    <color name="strong_pink">#d80073</color>
+    <color name="dark_red">#a20025</color>
+    <color name="red">#e51400</color>
+    <color name="orange">#fa6800</color>
+    <color name="dark_orange">#f0a30a</color>
+    <color name="yellow">#e3c800</color>
+    <color name="brown">#825a2c</color>
+    <color name="strange_green">#6d8764</color>
+    <color name="strange_blue">#647687</color>
+    <color name="strange_purple">#76608a</color>
+    <color name="strange_brown">#87794e</color>
+    <!--Colors for colors array to use in color picker activity-->
+    <array name="views_colors">
+        <item>@color/lime_green</item>
+        <item>@color/green</item>
+        <item>@color/dark_green</item>
+        <item>@color/light_blue</item>
+        <item>@color/blue</item>
+        <item>@color/dark_blue</item>
+        <item>@color/purple</item>
+        <item>@color/light_purple</item>
+        <item>@color/pink</item>
+        <item>@color/strong_pink</item>
+        <item>@color/dark_red</item>
+        <item>@color/red</item>
+        <item>@color/orange</item>
+        <item>@color/dark_orange</item>
+        <item>@color/yellow</item>
+        <item>@color/brown</item>
+        <item>@color/strange_green</item>
+        <item>@color/strange_blue</item>
+        <item>@color/strange_purple</item>
+        <item>@color/strange_brown</item>
+    </array>
     
 </resources>

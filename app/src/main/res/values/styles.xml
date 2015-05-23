@@ -2,11 +2,7 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:textSize">30sp</item>
-        <item name="android:fontFamily">comic-sans</item>
-        <item name="android:textColor">@color/font_color</item>
         <item name="android:actionBarStyle">@style/MyActionBar</item>
-
         <!-- Support library compatibility -->
         <item name="actionBarStyle">@style/MyActionBar</item>
     </style>

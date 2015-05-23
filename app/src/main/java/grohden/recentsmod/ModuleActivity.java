@@ -1,13 +1,12 @@
 package grohden.recentsmod;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
-import android.widget.TextView;
+import android.widget.Button;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -16,27 +15,18 @@ import butterknife.InjectView;
 public class ModuleActivity extends ActionBarActivity {
     public static boolean DEBUG=true;
 
-    @InjectView(R.id.too_lazy) TextView tooLazy;
-
+    @InjectView(R.id.teste) Button test;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_module);
         ButterKnife.inject(this);
-        tooLazy.setOnClickListener(new View.OnClickListener() {
+        test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Create an animation instance
-                Animation an = new RotateAnimation(0.0f, 360.0f,v.getWidth()/2,v.getHeight()/2);
+                Intent i=new Intent(getApplicationContext(),ColorPickerActivity.class);
+                startActivity(i);
 
-                // Set the animation's parameters
-                an.setDuration(300);               // duration in ms
-                an.setRepeatCount(0);                // -1 = infinite repeated
-                an.setRepeatMode(Animation.REVERSE); // reverses each repeat
-                an.setFillAfter(true);               // keep rotation after animation
-
-                // Aply animation to image view
-                v.startAnimation(an);
             }
         });
     }

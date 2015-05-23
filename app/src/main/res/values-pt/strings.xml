@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Recents Mod</string>
+    <string name="nothing_implemented">Parece que o desenvolvedor foi muito preguiçoso para adicionar alguma preferencia de usuario</string>
+    <string name="action_settings">Configurações</string>
+</resources>

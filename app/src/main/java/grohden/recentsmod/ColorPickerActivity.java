@@ -1,41 +1,39 @@
 package grohden.recentsmod;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.GridLayout;
-import android.widget.RelativeLayout;
-
-import java.lang.reflect.Array;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class ColorPickerActivity extends ActionBarActivity {
 
-    @InjectView(R.id.colors_holder) GridLayout colorGrid;
+    @InjectView(R.id.colors_holder) GridView colorGrid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_color_picker);
         ButterKnife.inject(this);
+
         int[] colors=getApplicationContext().getResources().getIntArray(R.array.views_colors);
-        for (int i = 0; i<colors.length; i++) {
-            View squad=new View(this);
-            int size= Utils.getInDIP(50,getResources());
-            RelativeLayout.LayoutParams flp=new RelativeLayout.LayoutParams(size,size);
-            int margin=Utils.getInDIP(100, getResources());
-            flp.setMargins(margin, margin, margin, margin);
-            squad.setLayoutParams(flp);
-            colorGrid.addView(squad,i);
-            colorGrid.getChildAt(i).setBackgroundColor(colors[i]);
-            squad.requestLayout();
-        }
+        colorGrid.setAdapter(new ColorTileAdapter(this,colors));
+        colorGrid.setOnItemClickListener(new OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v,
+                                    int position, long id) {
+                Toast.makeText(getApplicationContext(), (v.findViewById(R.id.color_tile)).getBackground() + "", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     @Override

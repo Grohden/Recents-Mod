@@ -1,11 +1,19 @@
 <resources>
     <string name="app_name">Recents Mod</string>
     <string name="nothing_implemented">It seems like the developer was too lazy to add some user preferences</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="hello_world">To Hell the world!</string>
     <string name="action_settings">Settings</string>
     <string name="popular_colors">Popular Colors</string>
-
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_color_picker">ColorPickerActivity</string>
+
+    <string name="background_select">Background color</string>
+    <string name="icon_position">Icon Position</string>
+    <string name="scroll_direction">Scroll Direction</string>
+
+    <array name="options_names">
+        <item>@string/background_select</item>
+        <item>@string/icon_position</item>
+        <item>@string/scroll_direction</item>
+    </array>
+    <string name="title_activity_multiple_itens">MultipleItensActivity</string>
 </resources>

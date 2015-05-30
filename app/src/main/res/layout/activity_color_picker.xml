@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_height="fill_parent"
     android:layout_width="fill_parent">
     <TextView
         android:layout_marginTop="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="36sp"
         android:text="@string/popular_colors"/>
-    <GridLayout
-        android:id="@+id/colors_holder"
+    <GridView
+        android:numColumns="4"
         android:layout_gravity="center"
+        android:gravity="center"
+        android:id="@+id/colors_holder"
+        android:layout_marginTop="30dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:rowCount="5"
-        android:columnCount="4">
-    </GridLayout>
-</FrameLayout>
+        android:layout_height="match_parent">
+    </GridView>
+</LinearLayout>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent">
+    <TextView
+        android:layout_gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="36sp"
+        android:text="@string/popular_colors"/>
+        <GridView
+            android:scrollbars="horizontal"
+            android:id="@+id/colors_holder"
+            android:numColumns="5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </GridView>
+</LinearLayout>

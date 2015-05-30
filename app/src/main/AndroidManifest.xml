@@ -30,6 +30,10 @@
             android:name=".ColorPickerActivity"
             android:label="@string/title_activity_color_picker" >
         </activity>
+        <activity
+            android:name=".test.MultipleItensActivity"
+            android:label="@string/title_activity_multiple_itens" >
+        </activity>
     </application>
 
 </manifest>

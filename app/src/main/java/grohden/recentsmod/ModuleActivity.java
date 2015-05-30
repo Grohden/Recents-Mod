@@ -6,27 +6,34 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import grohden.recentsmod.test.MultipleItensActivity;
 
 
 public class ModuleActivity extends ActionBarActivity {
     public static boolean DEBUG=true;
 
-    @InjectView(R.id.teste) Button test;
+    @InjectView(R.id.options_list) ListView optionsList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_module);
         ButterKnife.inject(this);
-        test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i=new Intent(getApplicationContext(),ColorPickerActivity.class);
-                startActivity(i);
 
+        String[] options=getApplicationContext().getResources().getStringArray(R.array.options_names);
+
+        optionsList.setAdapter(new OptionsAdapter(this,options));
+        optionsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getApplicationContext(), position + "", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -52,4 +59,5 @@ public class ModuleActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

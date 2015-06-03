@@ -6,7 +6,8 @@ What the mod is able to do now:
 
 <img src="https://cloud.githubusercontent.com/assets/7496871/7952142/9e3661a2-0987-11e5-9826-5fa2f5f976c2.png" alt="Demo" width="400"/>
 
-#TODO:
+TODO
+----
 Fix minimization animation when switch to recentsActivity.
 Create a good layout and add user options.
 

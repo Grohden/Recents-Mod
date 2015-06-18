@@ -1,3 +1,18 @@
+/*
+ * Copyright 2015 Gabriel de Oliveira Rohden
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package grohden.recentsmod.xposedclasses;
 
 
@@ -35,7 +50,10 @@ public class SystemUIModule implements IXposedHookZygoteInit, IXposedHookInitPac
     private static String MODULE_PATH = null;
     private static final String CLASS_RECENT_PANEL_VIEW = "com.android.systemui.recent.RecentsPanelView";
 
+
     // TODO: cleanup the code.
+    // TODO: add debug logs.
+    // TODO: create classes for view manipulation and other things.
     // TODO: fix 'minimization' animation position.
 
     @Override
@@ -65,17 +83,18 @@ public class SystemUIModule implements IXposedHookZygoteInit, IXposedHookInitPac
                     ImageView       appIcon = (ImageView) liparam.view.findViewById(liparam.res.getIdentifier("app_icon", "id", SYSTEM_UI_PACKAGE));
                     TextView        appName = (TextView) liparam.view.findViewById(liparam.res.getIdentifier("app_label", "id", SYSTEM_UI_PACKAGE));
                     View            line = liparam.view.findViewById(liparam.res.getIdentifier("recents_callout_line", "id", SYSTEM_UI_PACKAGE));
-                    //not remove views, instead set INVISIBLE to not crash something.s
+
+                    //don't remove views, instead set GONE to not crash something.
+                    appName.setVisibility(View.GONE);
+                    appIcon.setVisibility(View.GONE);
+                    line.setVisibility(View.GONE);
+
                     RelativeLayout.LayoutParams iconParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
                     iconParams.addRule(RelativeLayout.BELOW, appThumbnail.getId());
                     iconParams.addRule(RelativeLayout.ALIGN_LEFT, appThumbnail.getId());
                     appIcon.setLayoutParams(iconParams);
 
-                    //RelativeLayout.LayoutParams appNameParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                    //appNameParams.addRule(RelativeLayout.ALIGN_BOTTOM, appIcon.getId());
-                    //appNameParams.addRule(RelativeLayout.ALIGN_TOP, appIcon.getId());
-                    //appName.setLayoutParams(appNameParams);
-
+                    //-90 coz i've rotated the scrollview 90.
                     recentItem.setRotation(-90.0f);
                 }
             }
@@ -87,34 +106,38 @@ public class SystemUIModule implements IXposedHookZygoteInit, IXposedHookInitPac
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam loadPackageParam) throws Throwable {
         if (!loadPackageParam.packageName.equals(SYSTEM_UI_PACKAGE))
             return;
-        Class<?> recentPanelViewClass = XposedHelpers.findClass(CLASS_RECENT_PANEL_VIEW, loadPackageParam.classLoader);
-        //tried this to fix minimization, not worked.
+        final Class<?> recentPanelViewClass = XposedHelpers.findClass(CLASS_RECENT_PANEL_VIEW, loadPackageParam.classLoader);
+
         XposedHelpers.findAndHookMethod(recentPanelViewClass, "showIfReady", new XC_MethodHook() {
-            @Override
-            protected void afterHookedMethod(final XC_MethodHook.MethodHookParam param) {
-                View root = (View) param.thisObject;
-                Resources res = root.getResources();
-                Context context = root.getContext();
+                    @Override
+                    protected void afterHookedMethod(final XC_MethodHook.MethodHookParam param) {
+                        View root = (View) param.thisObject;
+                        Resources res = root.getResources();
+                        Context context = root.getContext();
 
-                WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-                Display display = wm.getDefaultDisplay();
-                int width = display.getWidth();  // deprecated
-                int height = display.getHeight();  // deprecated
+                        //getting display width and height.
+                        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+                        Display display = wm.getDefaultDisplay();
+                        int width = display.getWidth();  // deprecated
+                        int height = display.getHeight();  // deprecated
 
-                //The original view is a custom view that extends a scrollview, this should work.
-                ScrollView recentsContainer = (ScrollView) root.findViewById(res.getIdentifier("recents_container", "id", SYSTEM_UI_PACKAGE));
-                //recentsContainer.setBackgroundColor(Color.parseColor("#000000"));
-                recentsContainer.setRotation(90.0f);
-                FrameLayout.LayoutParams scrollLayoutParams = new FrameLayout.LayoutParams(height, width);
-                scrollLayoutParams.gravity = Gravity.CENTER;
-                recentsContainer.setLayoutParams(scrollLayoutParams);
+                        //The original view is a custom view that extends a scrollview, this should work.
+                        ScrollView recentsContainer = (ScrollView) root.findViewById(res.getIdentifier("recents_container", "id", SYSTEM_UI_PACKAGE));
+                        //this is the best way i've found until now, others may crash the system. i'll explore more later, for now its 'good'.
+                        recentsContainer.setRotation(90.0f);
 
+                        //since i've rotated the view, it don't fit in the screen, so i need to invert height and width, and apply.
+                        FrameLayout.LayoutParams scrollLayoutParams = new FrameLayout.LayoutParams(height, width);
+                        //and of course, center it.
+                        scrollLayoutParams.gravity = Gravity.CENTER;
+                        recentsContainer.setLayoutParams(scrollLayoutParams);
+                        recentsContainer.requestLayout();
 
-                LinearLayout recentsLinearLayout = (LinearLayout) root.findViewById(res.getIdentifier("recents_linear_layout", "id", SYSTEM_UI_PACKAGE));
+                        LinearLayout recentsLinearLayout = (LinearLayout) root.findViewById(res.getIdentifier("recents_linear_layout", "id", SYSTEM_UI_PACKAGE));
 
-                FrameLayout.LayoutParams llp=new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, Utils.getInDIP(20, res));
-                recentsLinearLayout.setLayoutParams(llp);
-            }
-        });
+                        FrameLayout.LayoutParams llp=new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, Utils.getInDIP(20, res));
+                        recentsLinearLayout.setLayoutParams(llp);
+                    }
+                });
     }
 }

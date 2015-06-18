@@ -22,7 +22,10 @@ android {
 dependencies {
     provided fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.jakewharton:butterknife:6.1.0'
-    compile 'com.android.support:appcompat-v7:22.1.1'
-    compile 'com.github.ppamorim:recyclerrenderers:1.2.2'
-    compile 'com.android.support:support-v4:22.1.1'
+    compile 'com.facebook.rebound:rebound:0.3.8'
+    compile 'com.android.support:support-v4:22.2.0'
+    compile 'com.android.support:recyclerview-v7:+'
+    compile 'com.android.support:appcompat-v7:+'
+
+
 }

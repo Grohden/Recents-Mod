@@ -4,9 +4,9 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
     <FrameLayout
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
         android:id="@+id/color_tile"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
         android:layout_width="60dp"
         android:layout_height="60dp">
     </FrameLayout>

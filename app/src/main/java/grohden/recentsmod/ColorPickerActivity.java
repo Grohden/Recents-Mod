@@ -1,5 +1,22 @@
+/*
+ * Copyright 2015 Gabriel de Oliveira Rohden
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package grohden.recentsmod;
 
+import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -25,12 +42,18 @@ public class ColorPickerActivity extends ActionBarActivity {
         setContentView(R.layout.activity_color_picker);
         ButterKnife.inject(this);
 
-        int[] colors=getApplicationContext().getResources().getIntArray(R.array.views_colors);
+        final int[] colors=getApplicationContext().getResources().getIntArray(R.array.views_colors);
         colorGrid.setAdapter(new ColorTileAdapter(this,colors));
         colorGrid.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                Toast.makeText(getApplicationContext(), (v.findViewById(R.id.color_tile)).getBackground() + "", Toast.LENGTH_SHORT).show();
+                if(R.id.color_tile==v.getId()) {
+                    Intent returnIntent = new Intent();
+                    ColorDrawable c = (ColorDrawable) v.getBackground();
+                    returnIntent.putExtra("RESULT", c.getColor());
+                    setResult(RESULT_OK, returnIntent);
+                    finish();
+                }
             }
         });
 

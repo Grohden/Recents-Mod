@@ -3,29 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ModuleActivity"
     android:scrollbars="none"
-    android:layout_marginLeft="6dp"
-    android:layout_marginRight="6dp"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ListView
-        android:id="@+id/options_list"
+    <Button
+        android:id="@+id/rebound_test_button"
+        android:text="Rebound test"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content" />
+    <android.support.v7.widget.RecyclerView
+        android:scrollbars="none"
+        android:layout_gravity="center"
+        android:id="@+id/options_recycle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </ListView>
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <fragment
-            android:id="@+id/fragment_recents"
-            android:layout_gravity="center"
-            android:name="grohden.recentsmod.RecentsFragment"
-            android:layout_width="500dp"
-            android:layout_height="500dp"
-            tools:layout="@layout/fragment_recents" />
-    </RelativeLayout>
+        android:layout_height="match_parent">
+    </android.support.v7.widget.RecyclerView>
 </LinearLayout>
 

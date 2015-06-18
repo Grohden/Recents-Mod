@@ -3,24 +3,21 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin">
+    android:layout_margin="10dp"
+    android:layout_height="wrap_content">
     <TextView
-        android:id="@+id/description_text"
         android:layout_gravity="center_vertical"
         android:textSize="@dimen/default_option"
-        android:layout_width="wrap_content"
+        android:id="@+id/my_text_view"
         android:layout_weight="1"
-        android:layout_height="wrap_content" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_world"/>
     <include
-        android:id="@+id/tile"
-        layout="@layout/tile_adapter"
-        android:layout_margin="10dp"
-        android:layout_width="60dp"
-        android:layout_gravity="center_vertical"
-        android:layout_height="60dp">
-    </include>
+        android:layout_gravity="end"
+        android:id="@+id/test_tile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        layout="@layout/tile_adapter" />
 
 </LinearLayout>

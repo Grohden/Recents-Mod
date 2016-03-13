@@ -76,18 +76,15 @@ public class OptionsRecycleAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_recents, parent, false);
         if (viewType==TYPE_COLOR_ITEM){
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.bg_option_adapter, parent, false);
             BackgroundItemHolder vh = new BackgroundItemHolder(v);
             return vh;
         }
         else if(viewType==TYPE_HEADER){
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_recents, parent, false);
             HeaderHolder headerHolder=new HeaderHolder(v);
             return headerHolder;
         } else {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.two_spinner_view, parent, false);
             PositionItemHolder vh=new PositionItemHolder(v);
             return  vh;
         }
@@ -128,18 +125,6 @@ public class OptionsRecycleAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public int getItemViewType(int position) {
-        int type=3;
-        switch (position){
-            case TYPE_HEADER:
-                type=TYPE_HEADER;
-                break;
-            case TYPE_COLOR_ITEM:
-                type=TYPE_COLOR_ITEM;
-                break;
-            case TYPE_POSITION_ITEM:
-                type=TYPE_POSITION_ITEM;
-                break;
-        }
-        return type;
+        return position; //TODO:Discover why i did this.
     }
 }

@@ -16,8 +16,8 @@
     <include
         android:layout_gravity="end"
         android:id="@+id/test_tile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/icon_square"
+        android:layout_height="@dimen/icon_square"
         layout="@layout/tile_adapter" />
 
 </LinearLayout>

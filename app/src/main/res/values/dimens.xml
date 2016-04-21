@@ -16,4 +16,7 @@
     <dimen name="default_title">36sp</dimen>
     <dimen name="default_subtitle">30sp</dimen>
     <dimen name="default_option">24sp</dimen>
+
+    <!-- App demo icon size -->
+    <dimen name="icon_square">80dp</dimen>
 </resources>

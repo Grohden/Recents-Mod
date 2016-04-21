@@ -41,7 +41,7 @@ public class ModuleActivity extends ActionBarActivity implements View.OnClickLis
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private Spring spring;
-    private boolean zoomed=false;
+    private boolean zoomed=true;
     private static double TENSION = 800;
     private static double DAMPER = 20; //friction
 
@@ -138,14 +138,13 @@ public class ModuleActivity extends ActionBarActivity implements View.OnClickLis
             optionsRecycle.animate().alpha(0f);
             optionsRecycle.setVisibility(View.GONE);
             mReboundTest.animate().y(+100);
-            zoomed=!zoomed;
         } else {
             spring.setEndValue(1f);
             optionsRecycle.animate().alpha(1f);
             optionsRecycle.setVisibility(View.VISIBLE);
             mReboundTest.animate().y(0);
-            zoomed=!zoomed;
         }
+        zoomed=!zoomed;
 
     }
 }

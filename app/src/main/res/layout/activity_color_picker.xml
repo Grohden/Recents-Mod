@@ -11,7 +11,7 @@
         android:textSize="36sp"
         android:text="@string/popular_colors"/>
     <GridView
-        android:numColumns="4"
+
         android:layout_gravity="center"
         android:gravity="center"
         android:id="@+id/colors_holder"

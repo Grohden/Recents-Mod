@@ -15,6 +15,7 @@
  */
 package grohden.recentsmod;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +33,6 @@ public class OptionsRecycleAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private static final int TYPE_COLOR_ITEM=1;
     private static final int TYPE_POSITION_ITEM=2;
 
-
     public static class BackgroundItemHolder extends RecyclerView.ViewHolder {
         public TextView mTextView;
         public FrameLayout mTile;
@@ -41,8 +41,16 @@ public class OptionsRecycleAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             super(linearLayout);
             mTextView = (TextView) linearLayout.findViewById(R.id.my_text_view);
             mTile = (FrameLayout) linearLayout.findViewById(R.id.test_tile);
+            linearLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i=new Intent(v.getContext(),ColorPickerActivity.class);
+                    v.getContext().startActivity(i);
+                }
+            });
         }
     }
+
     public static class HeaderHolder extends RecyclerView.ViewHolder {
         public FrameLayout mAppThumbnail;
         public View mAppIcon;
@@ -55,6 +63,7 @@ public class OptionsRecycleAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             mAppIcon = view.findViewById(R.id.app_icon);
         }
     }
+
     public static class PositionItemHolder extends RecyclerView.ViewHolder {
         public Spinner mGravitySpinner;
         public Spinner mPositionSpinner;
@@ -76,27 +85,31 @@ public class OptionsRecycleAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_recents, parent, false);
-        if (viewType==TYPE_COLOR_ITEM){
-            BackgroundItemHolder vh = new BackgroundItemHolder(v);
-            return vh;
+        RecyclerView.ViewHolder vh=null;
+        View v=null;
+        switch (viewType){
+            case TYPE_COLOR_ITEM:
+                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_background_option, parent, false);
+                vh = new BackgroundItemHolder(v);
+                break;
+            case TYPE_HEADER:
+                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recents_demo, parent, false);
+                vh=new HeaderHolder(v);
+                break;
+            case TYPE_POSITION_ITEM:
+                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_two_spiner, parent, false);
+                vh=new PositionItemHolder(v);
+                break;
         }
-        else if(viewType==TYPE_HEADER){
-            HeaderHolder headerHolder=new HeaderHolder(v);
-            return headerHolder;
-        } else {
-            PositionItemHolder vh=new PositionItemHolder(v);
-            return  vh;
-        }
+        return vh;
     }
-
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if(holder instanceof BackgroundItemHolder){
             setLayoutData((BackgroundItemHolder) holder, position);}
         else if(holder instanceof PositionItemHolder){
-            setLayoutData((PositionItemHolder)holder,position);
+            setLayoutData((PositionItemHolder) holder,position);
      }
 
     }
@@ -111,20 +124,23 @@ public class OptionsRecycleAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         v.mPositionSpinner.setAdapter(adapter);
         v.mGravitySpinner.setAdapter(adapter);
      }
+
     private void setLayoutData(BackgroundItemHolder v,int position){
         v.mTextView.setText(mDataset[position-1]);
         v.mTile.setBackgroundColor(mColors[position-1]);
-        }
+    }
+
     private void setLayoutData(HeaderHolder v, int position){
-        }
+    }
 
     @Override
     public int getItemCount() {
-        return mDataset.length+1;
+        return mDataset.length;
     }
 
     @Override
     public int getItemViewType(int position) {
         return position; //TODO:Discover why i did this.
     }
+
 }

@@ -10,13 +10,12 @@
         android:layout_height="wrap_content"
         android:textSize="36sp"
         android:text="@string/popular_colors"/>
-    <GridView
-
+    <android.support.v7.widget.RecyclerView
         android:layout_gravity="center"
         android:gravity="center"
         android:id="@+id/colors_holder"
         android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </GridView>
+    </android.support.v7.widget.RecyclerView>
 </LinearLayout>

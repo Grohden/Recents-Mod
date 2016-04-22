@@ -16,9 +16,13 @@
 package grohden.recentsmod;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,9 +36,9 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class ColorPickerActivity extends ActionBarActivity {
+public class ColorPickerActivity extends ActionBarActivity implements View.OnClickListener {
 
-    @InjectView(R.id.colors_holder) GridView colorGrid;
+    @InjectView(R.id.colors_holder) RecyclerView colorGrid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,20 +47,29 @@ public class ColorPickerActivity extends ActionBarActivity {
         ButterKnife.inject(this);
 
         final int[] colors=getApplicationContext().getResources().getIntArray(R.array.views_colors);
-        colorGrid.setAdapter(new ColorTileAdapter(this,colors));
-        colorGrid.setOnItemClickListener(new OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-                if(R.id.color_tile==v.getId()) {
-                    Intent returnIntent = new Intent();
-                    ColorDrawable c = (ColorDrawable) v.getBackground();
-                    returnIntent.putExtra("RESULT", c.getColor());
-                    setResult(RESULT_OK, returnIntent);
-                    finish();
-                }
-            }
-        });
+        GridLayoutManager gridLayoutManager=new GridLayoutManager(getApplicationContext(),4);
+        TileRecyclerAdapter tileRecyclerAdapter=new TileRecyclerAdapter(colors);
 
+        colorGrid.setLayoutManager(gridLayoutManager);
+        colorGrid.setAdapter(tileRecyclerAdapter);
+
+        tileRecyclerAdapter.setTileClickListener(this);
+
+
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        int color = Color.TRANSPARENT;
+        Drawable background = v.getBackground();
+        if (background instanceof ColorDrawable)
+            color = ((ColorDrawable) background).getColor();
+
+        Intent data = new Intent();
+        data.putExtra("COLOR",color);
+        setResult(RESULT_OK, data);
+        finish();
     }
 
     @Override

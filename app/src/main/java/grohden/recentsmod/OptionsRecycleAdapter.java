@@ -15,6 +15,7 @@
  */
 package grohden.recentsmod;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -29,25 +31,26 @@ import android.widget.TextView;
 public class OptionsRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private String[] mDataset;
     private int[] mColors;
-    private static final int TYPE_HEADER=0;
-    private static final int TYPE_COLOR_ITEM=1;
-    private static final int TYPE_POSITION_ITEM=2;
+    private OnItemClickListener listener=null;
+    public static final int TYPE_HEADER=0;
+    public static final int TYPE_COLOR_ITEM=1;
+    public static final int TYPE_POSITION_ITEM=2;
+
+    public OptionsRecycleAdapter(String[] myDataset,int[] myColors) {
+        mColors  = myColors;
+        mDataset = myDataset;
+    }
 
     public static class BackgroundItemHolder extends RecyclerView.ViewHolder {
         public TextView mTextView;
-        public FrameLayout mTile;
+        public View mTile;
+        public View parent;
 
         public BackgroundItemHolder(View linearLayout) {
             super(linearLayout);
-            mTextView = (TextView) linearLayout.findViewById(R.id.my_text_view);
-            mTile = (FrameLayout) linearLayout.findViewById(R.id.test_tile);
-            linearLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i=new Intent(v.getContext(),ColorPickerActivity.class);
-                    v.getContext().startActivity(i);
-                }
-            });
+            this.mTextView = (TextView) linearLayout.findViewById(R.id.my_text_view);
+            this.mTile = linearLayout.findViewById(R.id.color_tile);
+            this.parent = linearLayout;
         }
     }
 
@@ -77,11 +80,6 @@ public class OptionsRecycleAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
     }
 
-    public OptionsRecycleAdapter(String[] myDataset,int[] myColors) {
-        mColors  = myColors;
-        mDataset = myDataset;
-    }
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -107,11 +105,30 @@ public class OptionsRecycleAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if(holder instanceof BackgroundItemHolder){
-            setLayoutData((BackgroundItemHolder) holder, position);}
+            setLayoutData((BackgroundItemHolder) holder, position);
+        }
         else if(holder instanceof PositionItemHolder){
             setLayoutData((PositionItemHolder) holder,position);
-     }
+        }
 
+    }
+
+    @Override
+    public int getItemCount() {
+        return mDataset.length;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position; //TODO:Discover why i did this.
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position,int type);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.listener=listener;
     }
 
     private void setLayoutData(PositionItemHolder v,int position){
@@ -125,22 +142,18 @@ public class OptionsRecycleAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         v.mGravitySpinner.setAdapter(adapter);
      }
 
-    private void setLayoutData(BackgroundItemHolder v,int position){
+    private void setLayoutData(BackgroundItemHolder v, final int position){
         v.mTextView.setText(mDataset[position-1]);
         v.mTile.setBackgroundColor(mColors[position-1]);
+        v.parent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(v,position,TYPE_COLOR_ITEM);
+            }
+        });
     }
 
     private void setLayoutData(HeaderHolder v, int position){
-    }
-
-    @Override
-    public int getItemCount() {
-        return mDataset.length;
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return position; //TODO:Discover why i did this.
     }
 
 }

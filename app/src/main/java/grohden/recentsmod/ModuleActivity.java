@@ -15,6 +15,8 @@
  */
 package grohden.recentsmod;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,13 +35,14 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 
-// TODO: find a substitute for 'shared view' , official needs at last api 21.
+// TODO: find a substitute for 'shared view' , official needs at last api 21. (the test button is something like sharedView)
 
 
 public class ModuleActivity extends ActionBarActivity implements View.OnClickListener,SpringListener{
     public static boolean DEBUG=true;
-    private RecyclerView.Adapter mAdapter;
+    private OptionsRecycleAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private View colorOptionView=null;
     private Spring spring;
     private boolean zoomed=true;
     private static double TENSION = 800;
@@ -66,6 +69,18 @@ public class ModuleActivity extends ActionBarActivity implements View.OnClickLis
 
         mAdapter = new OptionsRecycleAdapter(options,colors);
         optionsRecycle.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(new OptionsRecycleAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position, int type) {
+                switch (type) {
+                    case OptionsRecycleAdapter.TYPE_COLOR_ITEM:
+                        Intent i=new Intent(view.getContext(),ColorPickerActivity.class);
+                        colorOptionView=view;
+                        startActivityForResult(i,1);
+                        break;
+                }
+            }
+        });
         mReboundTest.setOnClickListener(this);
 
         // Create a system to run the physics loop for a set of springs.
@@ -106,6 +121,16 @@ public class ModuleActivity extends ActionBarActivity implements View.OnClickLis
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                View v=colorOptionView.findViewById(R.id.color_tile);
+                v.setBackgroundColor(data.getIntExtra("COLOR", Color.BLACK));
+            }
+        }
+    }
 
     @Override
     public void onSpringUpdate(Spring spring) {
@@ -117,7 +142,6 @@ public class ModuleActivity extends ActionBarActivity implements View.OnClickLis
 
     @Override
     public void onSpringAtRest(Spring spring) {
-
     }
 
     @Override

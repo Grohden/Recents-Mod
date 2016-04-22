@@ -15,9 +15,9 @@
         android:text="@string/hello_world"/>
     <include
         android:layout_gravity="end"
-        android:id="@+id/test_tile"
+        android:id="@+id/color_tile"
         android:layout_width="@dimen/icon_square"
         android:layout_height="@dimen/icon_square"
-        layout="@layout/tile_adapter" />
+        layout="@layout/item_tile_adapter" />
 
 </LinearLayout>

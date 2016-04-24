@@ -15,15 +15,13 @@
  */
 package grohden.recentsmod;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -31,7 +29,8 @@ import android.widget.TextView;
 public class OptionsRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private String[] mDataset;
     private int[] mColors;
-    private OnItemClickListener listener=null;
+    private OnItemClickListener optionListener = null;
+    private OnSpinnerListener spinnerListener = null;
     public static final int TYPE_HEADER=0;
     public static final int TYPE_COLOR_ITEM=1;
     public static final int TYPE_POSITION_ITEM=2;
@@ -68,16 +67,26 @@ public class OptionsRecycleAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     public static class PositionItemHolder extends RecyclerView.ViewHolder {
-        public Spinner mGravitySpinner;
-        public Spinner mPositionSpinner;
+        public Spinner xSpinner;
+        public Spinner ySpinner;
         public TextView mDescription;
 
         public PositionItemHolder(View view) {
             super(view);
             mDescription = (TextView) view.findViewById(R.id.position_description);
-            mGravitySpinner = (Spinner) view.findViewById(R.id.gravity_spinner);
-            mPositionSpinner= (Spinner) view.findViewById(R.id.position_spinner);
+            xSpinner = (Spinner) view.findViewById(R.id.x_axys_spinner);
+            ySpinner = (Spinner) view.findViewById(R.id.y_axys_spinner);
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position,int type);
+    }
+
+    public interface OnSpinnerListener {
+        void onItemSelected(AdapterView<?> parent,View view,int pos, long id);
+
+        void onNothingSelected(AdapterView<?> parent);
     }
 
     @Override
@@ -123,23 +132,42 @@ public class OptionsRecycleAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return position; //TODO:Discover why i did this.
     }
 
-    public interface OnItemClickListener {
-        void onItemClick(View view, int position,int type);
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.optionListener =listener;
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener){
-        this.listener=listener;
+    public void setSpinnerListener(OnSpinnerListener listener){
+        this.spinnerListener = listener;
     }
 
     private void setLayoutData(PositionItemHolder v,int position){
         v.mDescription.setText(mDataset[position-1]); //set description text
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(v.mDescription.getContext(),R.array.planets_array, android.R.layout.simple_spinner_item);
+
+        ArrayAdapter<CharSequence> xAdapter = ArrayAdapter.createFromResource(v.mDescription.getContext(),R.array.x_axys_options, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> yAdapter = ArrayAdapter.createFromResource(v.mDescription.getContext(),R.array.y_axys_options, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        xAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        yAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         // Apply the adapter to the spinner
-        v.mPositionSpinner.setAdapter(adapter);
-        v.mGravitySpinner.setAdapter(adapter);
+        v.ySpinner.setAdapter(yAdapter);
+        v.xSpinner.setAdapter(xAdapter);
+
+        AdapterView.OnItemSelectedListener clickListener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinnerListener.onItemSelected(parent,view,position,id);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                spinnerListener.onNothingSelected(parent);
+            }
+        };
+
+        v.xSpinner.setOnItemSelectedListener(clickListener);
+        v.ySpinner.setOnItemSelectedListener(clickListener);
      }
 
     private void setLayoutData(BackgroundItemHolder v, final int position){
@@ -148,12 +176,13 @@ public class OptionsRecycleAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         v.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onItemClick(v,position,TYPE_COLOR_ITEM);
+                optionListener.onItemClick(v,position,TYPE_COLOR_ITEM);
             }
         });
     }
 
     private void setLayoutData(HeaderHolder v, int position){
+
     }
 
 }

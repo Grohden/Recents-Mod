@@ -24,6 +24,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 
 import com.facebook.rebound.Spring;
@@ -81,6 +82,17 @@ public class ModuleActivity extends ActionBarActivity implements View.OnClickLis
                 }
             }
         });
+        mAdapter.setSpinnerListener(new OptionsRecycleAdapter.OnSpinnerListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         mReboundTest.setOnClickListener(this);
 
         // Create a system to run the physics loop for a set of springs.
@@ -127,7 +139,7 @@ public class ModuleActivity extends ActionBarActivity implements View.OnClickLis
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
                 View v=colorOptionView.findViewById(R.id.color_tile);
-                v.setBackgroundColor(data.getIntExtra("COLOR", Color.BLACK));
+                v.setBackgroundColor(data.getIntExtra("COLOR", Color.WHITE  ));
             }
         }
     }

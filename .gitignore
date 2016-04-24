@@ -3,3 +3,6 @@ build/
 .gradle/
 gradle/
 .idea/
+.idea/workspace.xml
+.idea/workspace.xml
+.idea/libraries/butterknife_6_1_0.xml

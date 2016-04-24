@@ -16,12 +16,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     <Spinner
-        android:id="@+id/gravity_spinner"
+        android:id="@+id/x_axys_spinner"
         android:layout_weight="1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <Spinner
-        android:id="@+id/position_spinner"
+        android:id="@+id/y_axys_spinner"
         android:layout_weight="1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
